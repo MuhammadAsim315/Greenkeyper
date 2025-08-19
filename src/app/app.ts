@@ -1,4 +1,3 @@
-// src/app/app.ts
 import { Component } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -60,8 +59,6 @@ export class AppComponent {
 
       console.log('Login payload being sent to backend:', loginPayload);
 
-      // Send payload to a demo endpoint so it appears in the Network tab
-      // This call is independent of the demo auth flow below
       this.http.post('https://jsonplaceholder.typicode.com/posts', loginPayload)
         .pipe(
           catchError(error => {
@@ -75,7 +72,7 @@ export class AppComponent {
           }
         });
 
-      // DEMO CREDENTIALS CHECK (Remove this when you have a real backend)
+      // DEMO CREDENTIALS CHECK
       const validCredentials = [
         { email: 'counterpin7@gmail.com', password: 'admin123' },
         { email: 'user@test.com', password: 'password' },
@@ -105,34 +102,6 @@ export class AppComponent {
           this.loginError = 'Invalid email or password. Try: counterpin7@gmail.com / admin123';
         }
       }, 1000);
-
-      // REAL BACKEND INTEGRATION (Uncomment when you have a backend)
-      /*
-      const apiEndpoint = 'YOUR_API_ENDPOINT/api/auth/login';
-      
-      this.http.post(apiEndpoint, loginPayload).pipe(
-        catchError(error => {
-          console.error('Login error:', error);
-          this.loginError = 'Login failed. Please check your credentials.';
-          this.isLoading = false;
-          return of(null);
-        })
-      ).subscribe(response => {
-        this.isLoading = false;
-        
-        if (response) {
-          console.log('Login successful:', response);
-          
-          // Store authentication token if provided by backend
-          if (response && typeof response === 'object' && 'token' in response) {
-            sessionStorage.setItem('authToken', (response as any).token);
-          }
-          
-          // Redirect to dashboard
-          this.router.navigate(['/dashboard']);
-        }
-      });
-      */
       
     } else {
       console.log('Form is invalid');
